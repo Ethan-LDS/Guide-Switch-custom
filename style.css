@@ -1,0 +1,221 @@
+:root{
+  --red:#ff3c28;
+  --blue:#0ab9e6;
+  --dark:#2d2d2d;
+  --darker:#1b1b1f;
+  --light:#f2f2f5;
+  --green:#2ecc71;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:"Segoe UI",system-ui,-apple-system,Roboto,sans-serif;
+  color:#eee;
+  background:
+    radial-gradient(circle at 12% 20%,rgba(10,185,230,.12),transparent 40%),
+    radial-gradient(circle at 88% 70%,rgba(255,60,40,.12),transparent 40%),
+    var(--darker);
+  background-attachment:fixed;
+  min-height:100vh;
+  line-height:1.6;
+}
+body::before{ /* motif de points façon écran Switch */
+  content:"";position:fixed;inset:0;pointer-events:none;
+  background-image:radial-gradient(rgba(255,255,255,.05) 1.5px,transparent 1.5px);
+  background-size:26px 26px;
+}
+
+/* BARRE DU HAUT : Joy-Con bleu à gauche, rouge à droite */
+.topbar{
+  position:sticky;top:0;z-index:50;
+  display:flex;align-items:stretch;height:64px;
+  background:var(--dark);
+  box-shadow:0 4px 18px rgba(0,0,0,.5);
+  transition:transform .3s ease;
+}
+.topbar.hidden{transform:translateY(-110%)}
+.joy{width:52px;flex:none}
+.joy-left{background:var(--blue);border-radius:0 0 0 0;clip-path:polygon(0 0,100% 0,70% 100%,0 100%)}
+.joy-right{background:var(--red);clip-path:polygon(30% 0,100% 0,100% 100%,0 100%)}
+.menu{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;overflow-x:auto;padding:0 8px;scrollbar-width:none}
+.menu::-webkit-scrollbar{display:none}
+.tab{
+  display:flex;align-items:center;gap:8px;flex:none;
+  background:transparent;border:2px solid transparent;color:#ccc;
+  padding:8px 16px;border-radius:999px;font-size:.95rem;font-weight:600;cursor:pointer;
+  transition:.2s;
+}
+.tab .dot{width:10px;height:10px;border-radius:50%;background:#555;transition:.2s}
+.tab:hover{color:#fff;background:#3a3a40}
+.tab.active{color:#fff;border-color:var(--blue);background:#1f2a30;box-shadow:0 0 14px rgba(10,185,230,.5)}
+.tab.active .dot{background:var(--blue);box-shadow:0 0 8px var(--blue)}
+
+main{max-width:1000px;margin:0 auto;padding:28px 18px 60px}
+.page{display:none;animation:pop .35s ease}
+.page.active{display:block}
+@keyframes pop{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+h1{font-size:clamp(2.2rem,6vw,3.8rem);line-height:1.1;margin:10px 0 14px}
+.red{color:var(--red)}.blue{color:var(--blue)}
+h2{font-size:clamp(1.15rem,3vw,1.75rem);margin-bottom:12px;display:flex;align-items:center;gap:12px}
+h2::after{content:"";flex:1;height:5px;border-radius:5px;background:linear-gradient(90deg,var(--blue) 50%,var(--red) 50%);opacity:.8}
+.icon{font-size:1.4em}
+h3{font-size:1.2rem;margin-bottom:8px}
+h3 small{font-weight:400;color:#aaa;font-size:.8em}
+.sub{margin:30px 0 14px;font-size:1.3rem}
+.lead{font-size:1.08rem;color:#d8d8de;margin-bottom:20px}
+.badge{display:inline-block;background:var(--red);padding:5px 16px;border-radius:999px;font-weight:700;font-size:.85rem}
+
+/* HERO */
+.hero{text-align:center;margin-bottom:30px}
+.hero .lead{max-width:680px;margin-inline:auto}
+
+/* CARTES */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin:24px 0}
+.card{
+  text-align:left;color:#fff;border:none;border-radius:22px;padding:22px;cursor:pointer;
+  position:relative;overflow:hidden;font:inherit;
+  transition:transform .2s,box-shadow .2s;
+  box-shadow:0 6px 0 rgba(0,0,0,.35);
+}
+.card.static{cursor:default}
+.card:not(.static):hover{transform:translateY(-4px);box-shadow:0 10px 0 rgba(0,0,0,.35)}
+.card:not(.static):active{transform:translateY(3px);box-shadow:0 2px 0 rgba(0,0,0,.35)}
+.blue-card{background:linear-gradient(145deg,#12c8f5,#0689ab)}
+.red-card{background:linear-gradient(145deg,#ff5a46,#c72414)}
+.card h3{margin:36px 0 6px}
+.card p{font-size:.95rem;opacity:.95}
+.abxy{
+  position:absolute;top:14px;left:18px;width:34px;height:34px;border-radius:50%;
+  background:rgba(255,255,255,.92);color:#222;display:grid;place-items:center;font-weight:800;
+}
+
+/* PHOTOS */
+.photo{
+  margin:12px 0;border-radius:18px;overflow:hidden;background:#26262c;
+  border:3px solid #3b3b44;cursor:zoom-in;position:relative;
+  box-shadow:0 6px 18px rgba(0,0,0,.4);transition:.2s;
+}
+.photo:hover{border-color:var(--blue);transform:scale(1.01)}
+.photo img{display:block;width:100%;height:auto}
+.photo.wide{max-width:640px;margin-inline:auto}
+.photo.missing{min-height:160px;display:grid;place-items:center;cursor:default;border-style:dashed;color:#888;text-align:center;padding:16px}
+.photo.missing::before{content:"📷";display:block;font-size:2rem}
+.photo.missing span{display:block;font-size:.9rem}
+.photo-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin:14px 0}
+
+/* ÉTAPES */
+.steps{list-style:none;display:flex;flex-direction:column;gap:14px;margin:6px 0 20px}
+.steps li{
+  display:flex;gap:16px;background:#26262c;border-radius:20px;padding:16px 18px;
+  border-left:6px solid var(--blue);
+}
+.steps li:nth-child(even){border-left-color:var(--red)}
+.num{
+  flex:none;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;
+  font-weight:800;background:var(--blue);color:#fff;
+}
+.steps li:nth-child(even) .num{background:var(--red)}
+.steps li>div{flex:1;min-width:0}
+.steps.compact li{padding:12px 14px;gap:12px}
+
+/* BLOCS */
+.panel{background:#2a2a31;border-radius:24px;padding:22px;margin:22px 0;border:2px solid #3b3b44}
+.panel.center{text-align:center}
+.big{font-size:1.6rem;font-weight:800;margin-top:8px}
+.tip,.warn,.good{border-radius:16px;padding:14px 18px;margin:16px 0}
+.tip{background:rgba(10,185,230,.15);border:2px solid var(--blue)}
+.warn{background:rgba(255,60,40,.15);border:2px solid var(--red)}
+.good{background:rgba(46,204,113,.14);border:2px solid var(--green);margin-top:14px}
+.greenText{color:var(--green)}
+.pill{display:inline-block;padding:3px 14px;border-radius:999px;color:#fff;font-size:.9rem;margin-right:8px}
+.pill.blue{background:var(--blue)}.pill.red{background:var(--red)}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.two-col .panel{margin:0}
+
+footer{text-align:center;padding:24px;color:#888;font-size:.9rem}
+
+/* LIGHTBOX */
+.lightbox{position:fixed;inset:0;background:rgba(0,0,0,.88);display:none;place-items:center;z-index:100;cursor:zoom-out;padding:20px}
+.lightbox.open{display:grid}
+.lightbox img{max-width:100%;max-height:100%;border-radius:14px}
+
+/* TÉLÉPHONE */
+@media(max-width:760px){
+  .two-col{grid-template-columns:1fr}
+  .joy{width:22px}
+  .tab{padding:7px 12px;font-size:.85rem}
+  .steps li{padding:12px;gap:10px}
+  main{padding:20px 12px 50px}
+}
+
+/* TAILLE DES PHOTOS : réduites pour ne pas prendre trop de place */
+.steps .photo{max-width:380px}
+.steps .photo img{max-height:300px;object-fit:contain;background:#1b1b1f}
+.panel > .photo{max-width:380px}
+.panel > .photo img{max-height:300px;object-fit:contain;background:#1b1b1f}
+.steps.compact .photo{max-width:300px}
+.steps.compact .photo img{max-height:240px}
+/* tailles au choix : ajoute class="photo small|medium|large" sur un <figure> pour la changer */
+.photo.small{max-width:220px !important}
+.photo.small img{max-height:180px !important}
+.photo.medium{max-width:380px !important}
+.photo.large{max-width:560px !important}
+.photo.large img{max-height:420px !important}
+@media(max-width:760px){
+  .steps .photo,.panel > .photo,.steps.compact .photo{max-width:100%}
+  .steps .photo img{max-height:240px}
+}
+
+/* TITRES : "?" toujours collé au dernier mot */
+h2{flex-wrap:nowrap}
+
+/* (En Wi-Fi) sous le titre */
+h3 small.below{display:block;margin-top:2px}
+
+/* Deux photos côte à côte dans une étape */
+.steps .photo-row{grid-template-columns:repeat(auto-fit,minmax(180px,380px));gap:12px;margin:10px 0}
+.steps .photo-row .photo{margin:0;max-width:none}
+
+/* CONTACT */
+.contact-title{margin-top:36px}
+a.card{display:block;text-decoration:none}
+.link-card h3{margin:0 0 6px}
+.contact-grid{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+
+/* Lien de téléchargement dans une étape */
+a.dl{color:var(--blue);text-decoration:underline;text-underline-offset:3px}
+a.dl:hover{color:#fff}
+
+/* ===== MOBILE : menu complet + glisser pour changer de page ===== */
+/* le bouton Accueil n'était pas atteignable : centrage qui coupait le début du menu */
+.menu{justify-content:flex-start;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch}
+.menu .tab:first-child{margin-left:auto}
+.menu .tab:last-child{margin-right:auto}
+main{overflow-x:clip}
+
+/* animation selon le sens du glissement */
+.page.from-right{animation:slideInR .3s ease}
+.page.from-left{animation:slideInL .3s ease}
+@keyframes slideInR{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:none}}
+@keyframes slideInL{from{opacity:0;transform:translateX(-40px)}to{opacity:1;transform:none}}
+
+/* points indicateurs (téléphone) */
+.dots{display:none;position:absolute;left:0;right:0;bottom:4px;justify-content:center;gap:6px;pointer-events:none}
+.dots span{width:6px;height:6px;border-radius:50%;background:#555;transition:.2s}
+.dots span.on{background:var(--blue);width:16px;border-radius:6px}
+
+/* indication "Glissez" */
+.swipe-hint{
+  display:none;position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(20px);
+  z-index:60;background:rgba(45,45,45,.95);color:#fff;border:2px solid var(--blue);
+  padding:10px 18px;border-radius:999px;font-weight:600;font-size:.9rem;white-space:nowrap;
+  box-shadow:0 6px 18px rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:opacity .4s,transform .4s;
+}
+.swipe-hint.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@media(max-width:760px){
+  .dots{display:flex}
+  .swipe-hint{display:block}
+  .topbar{height:68px}
+}
