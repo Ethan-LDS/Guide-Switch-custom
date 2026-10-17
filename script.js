@@ -1,6 +1,6 @@
 // ===== TOUTES LES PHOTOS DU SITE (change seulement les noms ici) =====
 const PHOTOS = {
-  'accueil': 'photos/DBI.png',
+  'accueil': 'photos/accueil.png',
   'dbi-01': 'photos/DBI.png',
   'dbi-03': 'photos/StartMTPconnection.png',
   'dbi-05': 'photos/SDcardInstall.png',
